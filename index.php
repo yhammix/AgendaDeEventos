@@ -31,13 +31,13 @@
                 <div id='calendar'></div>
             </div>
             
-                                    <!--MOdal-->
+                                    <!-- MOdal -->
             <!--  Modal trigger button  -->
             <button
                 type="button"
                 class="btn btn-primary btn-lg"
                 data-bs-toggle="modal"
-                data-bs-target="#modalId"
+                data-bs-target="#modalEvento"
             >
                 Launch
             </button>
@@ -45,7 +45,7 @@
             <!-- Modal Body-->
             <div
                 class="modal fade"
-                id="modalId"
+                id="modalEvento"
                 tabindex="-1"
                 role="dialog"
                 aria-labelledby="modalTitleId"
@@ -64,9 +64,85 @@
                                 aria-label="Close"
                             ></button>
                         </div>
+
                         <div class="modal-body">
-                            <div class="container-fluid">Add rows here</div>
+                            <div class="container-fluid">
+                                <form action="" method="post">
+                                    <div class="mb-3">
+                                        <label for="id" class="form-label">ID:</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            name="id"
+                                            id="id"
+                                            aria-describedby="helpId"
+                                            placeholder="ID"
+                                        />
+                                        
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="titulo" class="form-label">Titulo</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            name="titulo"
+                                            id="titulo"
+                                            aria-describedby="helpId"
+                                            placeholder="Titulo"
+                                        />
+                                        
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="fecha" class="form-label">Fecha:</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            name="fecha"
+                                            id="fecha"
+                                            aria-describedby="helpId"
+                                            placeholder="Fecha:"
+                                        />
+                                       
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="hora" class="form-label">Hora del evento:</label>
+                                        <input
+                                            type="time"
+                                            class="form-control"
+                                            name="hora"
+                                            id="hora"
+                                            aria-describedby="helpId"
+                                            placeholder="Hora"
+                                        />
+                                        
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="descripcion" class="form-label">Descripcion</label>
+                                        <textarea class="form-control" name="descripcion" id="descripcion" rows="3"></textarea>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="color" class="form-label">Color:</label>
+                                        <input
+                                            type="color"
+                                            class="form-control"
+                                            name="color"
+                                            id="color"
+                                            aria-describedby="helpId"
+                                            placeholder="Color:"
+                                        />
+                                        
+                                    </div>
+                                    
+                                    
+                                </form>
+                            </div>
                         </div>
+
                         <div class="modal-footer">
                             <button
                                 type="button"
@@ -84,28 +160,7 @@
 
         </div>
 
-        <script>
-
-            document.addEventListener('DOMContentLoaded', function() {
-                var calendarEl = document.getElementById('calendar');
-                var calendar = new FullCalendar.Calendar(calendarEl, {
-                    initialView: 'dayGridMonth',
-                    locale:"es",      //Linea para traducir el calendario    
-                    // headerToolBar:{
-                    //     left:'prev,next today',
-                    //     center:'title',
-                    //     right:'dayGridMonth,timeGridWeek,timeGridDay'
-                    // }     
-                    headerToolbar:{
-                        left:'prev,next today', 
-                        center:'title', 
-                        right:'dayGridMonth,timeGridWeek,timeGridDay'
-                        }           
-                });
-                calendar.render();
-            });
-
-        </script>
+        
 
         
 
@@ -121,5 +176,30 @@
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
             crossorigin="anonymous"
         ></script>
+
+        <script>
+            var modalEvento;
+            modalEvento= new bootstrap.Modal(document.getElementById('modalEvento'),{keyboard:false});
+
+            document.addEventListener('DOMContentLoaded', function() {
+                var calendarEl = document.getElementById('calendar');
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
+                    locale:"es",      //Linea para traducir el calendario       
+                    headerToolbar:{
+                        left:'prev,next today', 
+                        center:'title', 
+                        right:'dayGridMonth,timeGridWeek,timeGridDay'
+                    },
+                    dateClick:function(informacion) //f() q atrapa cuando presiona un dia especifico
+                    {
+                        alert("Presionaste "+informacion.dateStr);
+                        modalEvento.show();
+                    }           
+                });
+                calendar.render();
+            });
+
+        </script>
     </body>
 </html>
