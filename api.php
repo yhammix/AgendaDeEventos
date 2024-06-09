@@ -1,4 +1,5 @@
 <?php
+
 header("Content-Type: application/json");
 
 /*
@@ -10,12 +11,34 @@ INSERT INTO `tbleventos` (`id`, `title`, `descripcion`, `color`, `start`, `end`)
 
 $pdo= new PDO("mysql:host=localhost;dbname=agenda","root","");
 
-$sentenciaSQL= $pdo->prepare("SELECT * FROM tbleventos");
-$sentenciaSQL->execute();
-     
-$resultado=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);   /*Almaceno Rdo en resultado */
-print_r(json_encode($resultado));   /*imprimo resultado usando f() JSON */
+$accion= (isset($_GET['accion']))?$_GET['accion']:'leer';
 
-print_r($_POST);
+switch($accion){
+   
+   case 'leer':
+        
+      $sentenciaSQL= $pdo->prepare("SELECT * FROM tbleventos");
+      $sentenciaSQL->execute();
+      $resultado=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
+      print_r(json_encode($resultado));/*imprimo resultado usando f() JSON */
 
+  break;
+  case 'agregar':
+      
+      $sentenciaSQL= $pdo->prepare("INSERT INTO `tbleventos` (`id`, `title`, `descripcion`, `color`, `start`, `end`) VALUES (NULL,:title,:descripcion,:color, :start,:end);");
+      $sentenciaSQL->execute( array(
+          "title"=>$_POST['title'], 
+          "descripcion"=>$_POST['descripcion'],
+          "color"=>$_POST['color'],
+          "start"=>$_POST['fecha']." ".$_POST['hora'].":00",
+          "end"=>$_POST['fecha']." ".$_POST['hora'].":00"
+      ) );
+      print_r($_POST);
+  break;
+}
+
+
+
+print_r($_POST); 
+ 
 ?>

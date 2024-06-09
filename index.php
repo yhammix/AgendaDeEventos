@@ -193,7 +193,8 @@
                     },
                     dateClick:function(informacion) //f() q atrapa cuando presiona un dia especifico
                     {
-                        alert("Presionaste "+informacion.dateStr);
+                        limpiarFormulario(informacion.dateStr);
+                        //alert("Presionaste "+informacion.dateStr);
                         modalEvento.show();
                     },
                     events:"api.php"           
@@ -231,6 +232,16 @@
                     console.log(error);
                 })
             }
+            function recuperarDatosEvento(evento){
+                
+                document.getElementById('titulo').value="";
+                document.getElementById('fecha').value=fecha;
+                document.getElementById('hora').value="12:00";
+                document.getElementById('descripcion').value="";
+                document.getElementById('color').value="";
+                document.getElementById('id').value="";
+            }
+
         </script>
 
     </body>
