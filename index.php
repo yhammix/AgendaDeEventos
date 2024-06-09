@@ -151,7 +151,7 @@
                             >
                                 Close
                             </button>
-                            <button type="button" class="btn btn-primary">Save</button>
+                            <button type="button" onclick="agregarEvento()" class="btn btn-primary">Guardar</button>
                         </div>
                     </div>
                 </div>
@@ -195,11 +195,43 @@
                     {
                         alert("Presionaste "+informacion.dateStr);
                         modalEvento.show();
-                    }           
+                    },
+                    events:"api.php"           
                 });
                 calendar.render();
             });
 
         </script>
+
+        <script>
+            function agregarEvento(){
+                var evento = new FormData();
+                //f() q recolectan los valores
+                evento.append("title", document.getElementById('titulo').value);
+
+                evento.append("fecha", document.getElementById('fecha').value);
+                evento.append("hora", document.getElementById('hora').value);
+                evento.append("descripcion", document.getElementById('descripcion').value);
+                evento.append("color", document.getElementById('color').value);
+                evento.append("id", document.getElementById('id').value);
+
+                for(var valor of evento.values()){
+                    console.log(valor);
+                }
+
+                    //<!--envio a la URL "evento"-->
+                fetch("api.php?accion=agregar",{ 
+                    method: "POST",
+                    body:evento 
+                })
+                .then(data=>{
+                    console.log(data);
+                })
+                .catch(error=>{
+                    console.log(error);
+                })
+            }
+        </script>
+
     </body>
 </html>
